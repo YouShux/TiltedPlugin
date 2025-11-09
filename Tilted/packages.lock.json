@@ -2,11 +2,23 @@
   "version": 1,
   "dependencies": {
     "net9.0-windows7.0": {
+      "AEAssist.NET": {
+        "type": "Direct",
+        "requested": "[1.2.3, )",
+        "resolved": "1.2.3",
+        "contentHash": "/86DLtCfBoQW2b9ISKOnnBW1XsBBt4KoIfSbC58tXPalxdHMF/LTod1CexigilPhiqeXpayz5k7L/2jHYhC/pg=="
+      },
       "DalamudPackager": {
         "type": "Direct",
         "requested": "[13.0.0, )",
         "resolved": "13.0.0",
         "contentHash": "Mb3cUDSK/vDPQ8gQIeuCw03EMYrej1B4J44a1AvIJ9C759p9XeqdU9Hg4WgOmlnlPe0G7ILTD32PKSUpkQNa8w=="
+      },
+      "Newtonsoft.Json": {
+        "type": "Direct",
+        "requested": "[13.0.4, )",
+        "resolved": "13.0.4",
+        "contentHash": "pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A=="
       }
     }
   }

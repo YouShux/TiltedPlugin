@@ -1,7 +1,6 @@
-﻿using System.IO;
+using System.IO;
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
-using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using Newtonsoft.Json;
@@ -47,7 +46,7 @@ namespace Tilted
 
       CommandManager.AddHandler(commandName, new CommandInfo(OnCommand)
       {
-        HelpMessage = "opens the configuration window"
+        HelpMessage = "打开配置窗口"
       });
 
       Service.Framework.Update += CameraTilter.OnUpdate;

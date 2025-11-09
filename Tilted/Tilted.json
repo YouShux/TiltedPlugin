@@ -1,8 +1,8 @@
 {
   "Author": "Meoiswa",
   "Name": "Tilted",
-  "Punchline": "Tilt the camera, not yourself.",
-  "Description": "Automatically adjusts the Third Person Camera Angle/Distance given certain conditions.",
+  "Punchline": "倾斜镜头，不要倾斜你自己",
+  "Description": "根据特定条件自动调整第三人称镜头角度与距离",
   "InternalName": "Tilted",
   "ApplicableVersion": "any",
   "Tags": [

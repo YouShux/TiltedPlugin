@@ -42,13 +42,13 @@ namespace Tilted
     {
       // can't ref a property, so use a local copy
       var enabled = configuration.MasterEnable;
-      if (ImGui.Checkbox("Master Enable", ref enabled))
+      if (ImGui.Checkbox("总开关", ref enabled))
       {
         configuration.MasterEnable = enabled;
         configuration.Save();
       }
       var enabledInGpose = configuration.EnableInGpose;
-      if (ImGui.Checkbox("Enable in Gpose", ref enabledInGpose))
+      if (ImGui.Checkbox("拍照模式启用", ref enabledInGpose))
       {
         configuration.EnableInGpose = enabledInGpose;
         configuration.Save();
@@ -67,16 +67,16 @@ namespace Tilted
 
     private void DrawTriggersSection()
     {
-      if (ImGui.CollapsingHeader("Triggers"))
+      if (ImGui.CollapsingHeader("触发条件"))
       {
         ImGui.Indent();
 
-        if (ImGui.CollapsingHeader("Duties"))
+        if (ImGui.CollapsingHeader("副本"))
         {
           ImGui.Indent();
           DrawCheckbox(
-            "Enables when entering a Duty such as Dungeons and Trials.\nDisables after leaving the Duty.",
-            "Trigger##EnabledInDuties",
+            "进入副本时启用，如迷宫和讨伐\n离开副本后禁用",
+            "启用##EnabledInDuties",
             () => configuration.EnableInDuty,
             (value) =>
             {
@@ -87,12 +87,12 @@ namespace Tilted
           ImGui.Unindent();
         }
 
-        if (ImGui.CollapsingHeader("Combat"))
+        if (ImGui.CollapsingHeader("战斗"))
         {
           ImGui.Indent();
           DrawCheckbox(
-            "Enables when entering combat.\nWaits \"Timeout\" seconds after leaving combat before disabling.\nClick \"Set\" to copy Auto-sheathe timer.",
-            "Trigger##EnabledInCombat",
+            "进入战斗时启用\n战斗结束后等待“超时”秒再禁用\n点击“设置”复制自动收刀计时",
+            "启用##EnabledInCombat",
             () => configuration.EnableInCombat,
             (value) =>
             {
@@ -102,12 +102,12 @@ namespace Tilted
           );
 
           var combatTimeout = configuration.CombatTimeoutSeconds;
-          if (ImGui.Button("Set##SetCombatTimeout"))
+          if (ImGui.Button("设置##SetCombatTimeout"))
           {
             combatTimeout = TiltedHelper.GetWeaponAutoPutAwayTime();
           }
           ImGui.SameLine();
-          if (ImGui.InputFloat("Timeout##CombatTmeout", ref combatTimeout, 0.1f, 1.0f))
+          if (ImGui.InputFloat("超时##CombatTmeout", ref combatTimeout, 0.1f, 1.0f))
           {
             combatTimeout = Math.Clamp(combatTimeout, 0f, 10f);
             configuration.CombatTimeoutSeconds = combatTimeout;
@@ -116,12 +116,12 @@ namespace Tilted
           ImGui.Unindent();
         }
 
-        if (ImGui.CollapsingHeader("Weapon Sheathed"))
+        if (ImGui.CollapsingHeader("收刀状态"))
         {
           ImGui.Indent();
           DrawCheckbox(
-            "Enables when un-sheathing weapons.\nDisables when sheathing weapons.",
-            "Trigger##EnabledUnsheathed",
+            "拔刀时启用\n收刀时禁用",
+            "启用##EnabledUnsheathed",
             () => configuration.EnableUnsheathed,
             (value) =>
             {
@@ -132,12 +132,12 @@ namespace Tilted
           ImGui.Unindent();
         }
 
-        if (ImGui.CollapsingHeader("Mounted"))
+        if (ImGui.CollapsingHeader("骑乘"))
         {
           ImGui.Indent();
           DrawCheckbox(
-            "Enables when riding a Mount.\nDisables when dismounting.",
-            "Trigger##EnabledWhileMounted",
+            "骑乘坐骑时启用\n下坐骑时禁用",
+            "启用##EnabledWhileMounted",
             () => configuration.EnableMounted,
             (value) =>
             {
@@ -148,12 +148,12 @@ namespace Tilted
           ImGui.Unindent();
         }
 
-        if (ImGui.CollapsingHeader("Flying"))
+        if (ImGui.CollapsingHeader("飞行"))
         {
           ImGui.Indent();
           DrawCheckbox(
-            "Enables when flying on a Mount.\nDisables when landed.",
-            "Trigger##EnabledWhileFlying",
+            "骑乘坐骑飞行时启用\n着陆后禁用",
+            "启用##EnabledWhileFlying",
             () => configuration.EnableFlying,
             (value) =>
             {
@@ -164,12 +164,12 @@ namespace Tilted
           ImGui.Unindent();
         }
 
-        if (ImGui.CollapsingHeader("Zoomed"))
+        if (ImGui.CollapsingHeader("镜头靠近"))
         {
           ImGui.Indent();
           DrawCheckbox(
-            "Enables when zooming in past certain amount.\nDisables when zooming out.",
-            "Trigger##EnabledZoomed",
+            "缩放超过设定阈值时启用\n缩放回去时禁用",
+            "启用##EnabledZoomed",
             () => configuration.EnableZoomed,
             (value) =>
             {
@@ -179,12 +179,12 @@ namespace Tilted
           );
 
           var triggerDistance = configuration.ZoomedTriggerDistance;
-          if (ImGui.Button("Set##TriggerDistance"))
+          if (ImGui.Button("设置##TriggerDistance"))
           {
             triggerDistance = TiltedHelper.GetActiveCameraDistance();
           }
           ImGui.SameLine();
-          if (ImGui.InputFloat("Enabled##TriggerDistance", ref triggerDistance, 0.1f, 1.0f))
+          if (ImGui.InputFloat("启用阈值##TriggerDistance", ref triggerDistance, 0.1f, 1.0f))
           {
             triggerDistance = Math.Clamp(triggerDistance, 1.5f, 20f);
           }
@@ -204,7 +204,7 @@ namespace Tilted
 
     private void DrawTweaksSection()
     {
-      if (ImGui.CollapsingHeader("Tweaks"))
+      if (ImGui.CollapsingHeader("调整选项"))
       {
         ImGui.Indent();
 
@@ -217,26 +217,26 @@ namespace Tilted
 
     private void DrawTiltAngleSection()
     {
-      if (ImGui.CollapsingHeader("Tilt Angle"))
+      if (ImGui.CollapsingHeader("倾斜角度"))
       {
         ImGui.Indent();
 
-        ImGui.TextWrapped("These values alter the Character Configuration value:\n  \"3rd Person Camera Angle\".\nClick \"Set\" to copy the current camera tilt angle");
+        ImGui.TextWrapped("这些值会修改角色设置中的“第三人称镜头角度”\n点击“设置”复制当前镜头倾斜角度");
 
         var tiltEnabled = configuration.EnableTweakingCameraTilt;
-        if (ImGui.Checkbox("Enabled##TweakCameraTilt", ref tiltEnabled))
+        if (ImGui.Checkbox("启用##TweakCameraTilt", ref tiltEnabled))
         {
           configuration.EnableTweakingCameraTilt = tiltEnabled;
           configuration.Save();
         }
 
         int inTilt = (int)configuration.CameraTiltWhenEnabled;
-        if (ImGui.Button("Set##InTilt"))
+        if (ImGui.Button("设置##InTilt"))
         {
           inTilt = (int)TiltedHelper.GetTiltOffset();
         }
         ImGui.SameLine();
-        if (ImGui.InputInt("Enabled##EnabledTilt", ref inTilt))
+        if (ImGui.InputInt("启用时##EnabledTilt", ref inTilt))
         {
           inTilt = Math.Clamp(inTilt, 0, 100);
         }
@@ -248,12 +248,12 @@ namespace Tilted
         }
 
         int outTilt = (int)configuration.CameraTiltWhenDisabled;
-        if (ImGui.Button("Set##OutTilt"))
+        if (ImGui.Button("设置##OutTilt"))
         {
           outTilt = (int)TiltedHelper.GetTiltOffset();
         }
         ImGui.SameLine();
-        if (ImGui.InputInt("Disabled##DisabledTilt", ref outTilt))
+        if (ImGui.InputInt("禁用时##DisabledTilt", ref outTilt))
         {
           outTilt = Math.Clamp(outTilt, 0, 100);
         }
@@ -265,28 +265,28 @@ namespace Tilted
         }
 
         var smoothing = configuration.EnableCameraTiltSmoothing;
-        if (ImGui.Checkbox("Smoothing##SmoothingTilt", ref smoothing))
+        if (ImGui.Checkbox("平滑##SmoothingTilt", ref smoothing))
         {
           configuration.EnableCameraTiltSmoothing = smoothing;
           configuration.Save();
         }
 
         var mapping = configuration.EnableDistanceToTiltMapping;
-        if (ImGui.Checkbox("Interpolate by Distance##MappingTilt", ref mapping))
+        if (ImGui.Checkbox("按距离插值##MappingTilt", ref mapping))
         {
           configuration.EnableDistanceToTiltMapping = mapping;
           configuration.Save();
         }
 
         float maximumDistance = configuration.MaximumCameraDistance;
-        if (ImGui.Button("Set##MaximumDistance"))
+        if (ImGui.Button("设置##MaximumDistance"))
         {
           maximumDistance = TiltedHelper.GetActiveCameraDistance();
           configuration.MaximumCameraDistance = maximumDistance;
           configuration.Save();
         }
         ImGui.SameLine();
-        if (ImGui.InputFloat("Maximum##MaximumDistance", ref maximumDistance))
+        if (ImGui.InputFloat("最大距离##MaximumDistance", ref maximumDistance))
         {
           maximumDistance = Math.Clamp(maximumDistance, 1.5f, 20.0f);
           configuration.MaximumCameraDistance = maximumDistance;
@@ -294,14 +294,14 @@ namespace Tilted
         }
 
         float minimumDistance = configuration.MinimumCameraDistance;
-        if (ImGui.Button("Set##MinimumDistance"))
+        if (ImGui.Button("设置##MinimumDistance"))
         {
           minimumDistance = TiltedHelper.GetActiveCameraDistance();
           configuration.MinimumCameraDistance = minimumDistance;
           configuration.Save();
         }
         ImGui.SameLine();
-        if (ImGui.InputFloat("Minimum##MinimumDistance", ref minimumDistance))
+        if (ImGui.InputFloat("最小距离##MinimumDistance", ref minimumDistance))
         {
           minimumDistance = Math.Clamp(minimumDistance, 1.5f, 20.0f);
           configuration.MinimumCameraDistance = minimumDistance;
@@ -309,8 +309,8 @@ namespace Tilted
         }
 
         ImGui.Indent();
-        ImGui.TextWrapped("When this setting is enabled the Camera Tilt will be set to a value in-between the \"Enabled\" and \"Disabled\" values based on the camera's distance from your character."
-          + "\nTriggers and Smoothing will have no effect while this setting is enabled."
+        ImGui.TextWrapped("启用后，镜头倾斜角会在“启用时”和“禁用时”的值之间，按镜头与角色的距离进行插值"
+          + "\n开启该项时，触发器和平滑效果不生效"
           );
         ImGui.Unindent();
 
@@ -320,30 +320,30 @@ namespace Tilted
 
     private void DrawCameraDistanceSection()
     {
-      if (ImGui.CollapsingHeader("Camera Distance"))
+      if (ImGui.CollapsingHeader("镜头距离"))
       {
         ImGui.Indent();
 
-        ImGui.TextWrapped("Tweaks the camera distance (Zoom)."
-          + "\nOnly happens when transitioning between states"
-          + "\nSmoothing is always applied."
-          + "\nClick \"Set\" to copy the current camera distance."
-          + "\n(Disabled when using Zoomed trigger.");
+        ImGui.TextWrapped("调整镜头距离（缩放）"
+          + "\n只在状态切换时生效"
+          + "\n始终应用平滑"
+          + "\n点击“设置”复制当前镜头距离"
+          + "\n使用“镜头靠近”触发时禁用");
 
         var distanceEnabled = configuration.EnableCameraDistanceTweaking;
-        if (ImGui.Checkbox("Enabled##TweakCameraDistance", ref distanceEnabled))
+        if (ImGui.Checkbox("启用##TweakCameraDistance", ref distanceEnabled))
         {
           configuration.EnableCameraDistanceTweaking = distanceEnabled;
           configuration.Save();
         }
 
         var inDistance = configuration.CameraDistanceWhenEnabled;
-        if (ImGui.Button("Set##InDistance"))
+        if (ImGui.Button("设置##InDistance"))
         {
           inDistance = TiltedHelper.GetActiveCameraDistance();
         }
         ImGui.SameLine();
-        if (ImGui.InputFloat("Enabled##EnabledDistance", ref inDistance, 0.1f, 1.0f))
+        if (ImGui.InputFloat("启用时##EnabledDistance", ref inDistance, 0.1f, 1.0f))
         {
           inDistance = Math.Clamp(inDistance, 1.5f, 20f);
         }
@@ -355,12 +355,12 @@ namespace Tilted
         }
 
         var outDistance = configuration.CameraDistanceWhenDisabled;
-        if (ImGui.Button("Set##OutDistance"))
+        if (ImGui.Button("设置##OutDistance"))
         {
           outDistance = TiltedHelper.GetActiveCameraDistance();
         }
         ImGui.SameLine();
-        if (ImGui.InputFloat("Disabled##DisabledDistance", ref outDistance, 0.1f, 1.0f))
+        if (ImGui.InputFloat("禁用时##DisabledDistance", ref outDistance, 0.1f, 1.0f))
         {
           outDistance = Math.Clamp(outDistance, 1.5f, 20f);
         }
@@ -376,13 +376,13 @@ namespace Tilted
 
     public void DrawDebugSection()
     {
-      if (ImGui.CollapsingHeader("Debug Options"))
+      if (ImGui.CollapsingHeader("调试选项"))
       {
         ImGui.Indent();
 
-        ImGui.TextWrapped("Debug Options\nUse these to test your settings.");
+        ImGui.TextWrapped("调试选项\n用于测试你的设置");
         var forceEnabled = configuration.DebugForceEnabled;
-        if (ImGui.Checkbox("Force Enabled", ref forceEnabled))
+        if (ImGui.Checkbox("强制启用", ref forceEnabled))
         {
           configuration.DebugForceEnabled = forceEnabled;
           configuration.Save();
